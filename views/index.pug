@@ -1,0 +1,31 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title= title
+        script(src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs")
+        script(src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet")
+        script(src="https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier")
+        style.
+            body {
+                padding: 80px;
+            }
+            button {
+                padding: 10px;
+            }
+            #console{
+                padding: 10px;
+            }
+            video{
+                padding: 10px;
+            }
+    body 
+        h1= title
+        #console
+        video#webcam(autoplay playsinline muted width="224" height="224")
+        button#present Add Class Me
+        button#away add Class Away
+
+        script(src="/js/script.js")
