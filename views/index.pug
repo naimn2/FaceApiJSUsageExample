@@ -22,7 +22,7 @@ html(lang="en")
         //- script(src="https://unpkg.com/@tensorflow/tfjs-backend-wasm@2.1.0/dist/tf-backend-wasm.js")
         style.
             body {
-                padding: 80px;
+                padding: 40px;
             }
             button {
                 padding: 10px;
@@ -33,10 +33,15 @@ html(lang="en")
             video{
                 padding: 10px;
             }
+            canvas {
+                padding: 10px;
+                position: absolute;
+            }
     body 
-        h1= title
+        h2= title
+        canvas#canvas
+        video#webcam(autoplay playsinline muted width="480" height="480")
         #console
-        video#webcam(autoplay playsinline muted width="224" height="224")
         br
         div(style="padding: 10px;")
         button#addMe(style="padding: 10px;") Add Me
