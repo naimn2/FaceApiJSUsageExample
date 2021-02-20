@@ -5,10 +5,13 @@ html(lang="en")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title= title
-        script(src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs")
-        script(src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet")
-        script(src="https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier")
-        script(src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface")
+        //- script(src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs")
+        //- script(src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet")
+        //- script(src="https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier")
+        //- script(src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface")
+
+        //- face-api js
+        script(src="/js/face-api.min.js") 
 
         //- face-mesh
         //- script(src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh")
@@ -34,7 +37,11 @@ html(lang="en")
         h1= title
         #console
         video#webcam(autoplay playsinline muted width="224" height="224")
-        button#present Add Class Me
-        button#away add Class Away
+        br
+        div(style="padding: 10px;")
+        button#addMe(style="padding: 10px;") Add Me
+        br
+        input#inputLabel(type="text", name="Input Label" style="padding: 10px;")
+        button#addLabel(style="padding: 10px;") Add Class
 
         script(src="/js/script.js")
