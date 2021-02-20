@@ -1,6 +1,10 @@
 const webcamElement = document.getElementById('webcam');
+const consoleElement = document.getElementById('console');
 
 const classifier = knnClassifier.create();
+
+const myFaceLabel = 'This is Me!!';
+const otherLabel = 'Others';
 
 let webcam = null;
 let detector = null;
@@ -11,9 +15,9 @@ const addExample = async classId => {
 
     const facesDetected = await detector.estimateFaces(img, false);
     if (!facesDetected.length){
-        document.getElementById('console').innerText = 'No face detected';
+        consoleElement.innerText = 'No face detected';
     } else if (facesDetected.length > 1){
-        document.getElementById('console').innerText = `There must be only 
+        consoleElement.innerText = `There must be only 
         one face!`;
     } else {
         // const cropped = crop(img, facesDetected[0]);
@@ -45,12 +49,11 @@ async function app() {
     net = await mobilenet.load();
     console.log('Successfully loaded model');
 
+    addOtherSampleDataset(); // Add dataset for Other class
+
     // Create an object from Tensorflow.js data API which could capture image 
     // from the web camera as Tensor.
     webcam = await tf.data.webcam(webcamElement);
-
-    const myFaceLabel = 'This is Me!!';
-    const otherLabel = 'Others';
 
     document.getElementById('present').addEventListener('click', () => addExample(myFaceLabel));
     document.getElementById('away').addEventListener('click', () => addExample(otherLabel));
@@ -61,7 +64,6 @@ async function app() {
 
     while (true) {
         if (classifier.getNumClasses() > 0) {
-            console.log('Face Detected');
             const img = await webcam.capture();
 
             // PERCOBAAN
@@ -80,17 +82,17 @@ async function app() {
                 // const classes = ['Present', 'Away'];
                 var prediction = null;
                 prediction = result.label;
-                if (result.label !== myFaceLabel) {
-                    prediction = otherLabel;
-                }
-                document.getElementById('console').innerText = `
+                // if (result.label !== myFaceLabel) {
+                //     prediction = otherLabel;
+                // }
+                consoleElement.innerText = `
                     prediction: ${prediction}\n
                     probability: ${result.confidences[result.label]}\n
                     faces: ${facesDetected.length}
                 `;
             } else {
                 prediction = otherLabel;
-                document.getElementById('console').innerText = `
+                consoleElement.innerText = `
                     prediction: ${prediction}\n
                     probability: 1\n
                     faces: no face
@@ -103,6 +105,21 @@ async function app() {
 
         await tf.nextFrame();
     }
+}
+
+function addOtherSampleDataset() {
+    const IMGS_URL = '/model/datasets/';
+    const imgElement = document.createElement('img');
+    
+    for (let i = 0; i < 50; i++) {
+        imgElement.src = IMGS_URL+i+'.jpg';
+        imgElement.width = 224;
+        imgElement.height = 224;
+        const activation = net.infer(imgElement, true);
+        classifier.addExample(activation, otherLabel+i);
+        // consoleElement.append(imgElement);
+    }
+    imgElement.remove();
 }
 
 // function crop(img, faceDetected){
