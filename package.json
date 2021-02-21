@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "face-api.js": "^0.22.2",
     "pug": "^3.0.0"
   },
   "devDependencies": {
